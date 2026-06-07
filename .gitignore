@@ -1,0 +1,78 @@
+# ==========================================
+# Operating System Files
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ==========================================
+# IDE and Editor Configurations
+# ==========================================
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+*.suo.tmp
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains Rider / IntelliJ / WebStorm
+.idea/
+*.sln.DotSettings.user
+_ReSharper.Caches/
+*.userprefs
+
+# MonoDevelop / Xamarin Studio
+*.userprefs
+*.usertasks
+
+# ==========================================
+# .NET Build Outputs and Binaries
+# ==========================================
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bld/
+[Log]s/
+[Tt]est[Rr]esults/
+[Pp]ublish/
+
+# Compiled files & libraries
+*.dll
+*.exe
+*.pdb
+*.dylib
+*.so
+*.olb
+*.obj
+*.lib
+*.a
+*.la
+*.lo
+
+# Package Manager Files
+*.nupkg
+**/packages/
+!**/packages/build/
+
+# Local databases and user-specific files
+*.db
+*.sqlite
+*.log
+.data/
