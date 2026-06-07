@@ -76,3 +76,10 @@ bld/
 *.sqlite
 *.log
 .data/
+
+# ASP.NET Core Configuration
+appsettings.json
+appsettings.Production.json
+appsettings.*.json
+!appsettings.Development.json
+
