@@ -32,7 +32,6 @@ public class ProductsController : ApiControllerBase
     }
 
     [HttpPost]
-    [AllowAnonymous] // Allowing anonymous creation for ease of testing in this boilerplate
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PersonalFinance.Application.Common.Interfaces;
 using PersonalFinance.Infrastructure.Configurations;
+using PersonalFinance.Infrastructure.Identity;
 using PersonalFinance.Infrastructure.Persistence;
 using PersonalFinance.Infrastructure.Persistence.Repositories;
 
@@ -41,6 +42,9 @@ public static class DependencyInjection
                 options.EnableSensitiveDataLogging();
             }
         });
+
+        // Identity Service
+        services.AddScoped<IIdentityService, IdentityService>();
 
         // Repositories & Unit of Work
         services.AddScoped<IProductRepository, ProductRepository>();

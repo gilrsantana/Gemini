@@ -1,6 +1,12 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using PersonalFinance.Application.Extensions;
 using PersonalFinance.Infrastructure.Extensions;
+using PersonalFinance.Infrastructure.Identity;
+using PersonalFinance.Infrastructure.Persistence;
 using PersonalFinance.Presentation.Middlewares;
 using Scalar.AspNetCore;
 
@@ -23,8 +29,44 @@ public static class DependencyInjection
             });
         });
 
-        // Register authentication/authorization services (simple/no-op by default)
-        services.AddAuthentication();
+        // ASP.NET Core Identity
+        services.AddIdentityCore<Account>(options =>
+        {
+            options.Password.RequireDigit = false;
+            options.Password.RequiredLength = 6;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireLowercase = false;
+        })
+        .AddRoles<Role>()
+        .AddEntityFrameworkStores<PersonalFinanceDbContext>()
+        .AddDefaultTokenProviders();
+
+        // JWT Settings
+        var jwtSettings = configuration.GetSection(JwtSettings.SectionName).Get<JwtSettings>() ?? new JwtSettings();
+        services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
+
+        // JWT Bearer Authentication
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtSettings.Issuer,
+                ValidAudience = jwtSettings.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
+                ClockSkew = TimeSpan.Zero
+            };
+        });
+
         services.AddAuthorization();
 
         // OpenAPI & Scalar configuration
