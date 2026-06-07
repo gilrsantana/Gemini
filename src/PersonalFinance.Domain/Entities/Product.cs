@@ -7,6 +7,8 @@ public class Product : BaseEntity
     // Properties
     public string Name { get; private set; }
     public decimal Price { get; private set; }
+    public Guid CategoryId { get; private set; }
+    public virtual Category Category { get; private set; } = null!;
 
     // EF Core Constructor
     private Product() : base()
@@ -15,14 +17,15 @@ public class Product : BaseEntity
     }
 
     // Full Constructor
-    private Product(string name, decimal price) : base()
+    private Product(string name, decimal price, Guid categoryId) : base()
     {
         Name = name;
         Price = price;
+        CategoryId = categoryId;
     }
 
     // Static Factory
-    public static Result<Product> Create(string name, decimal price)
+    public static Result<Product> Create(string name, decimal price, Guid categoryId)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -34,11 +37,16 @@ public class Product : BaseEntity
             return Result.Failure<Product>(new Error("Product.InvalidPrice", "Price must be greater than zero."));
         }
 
-        return new Product(name, price);
+        if (categoryId == Guid.Empty)
+        {
+            return Result.Failure<Product>(new Error("Product.CategoryIdRequired", "Category ID is required."));
+        }
+
+        return new Product(name, price, categoryId);
     }
 
     // Mutation Method
-    public Result UpdateDetails(string name, decimal price)
+    public Result UpdateDetails(string name, decimal price, Guid categoryId)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -50,8 +58,14 @@ public class Product : BaseEntity
             return Result.Failure(new Error("Product.InvalidPrice", "Price must be greater than zero."));
         }
 
+        if (categoryId == Guid.Empty)
+        {
+            return Result.Failure(new Error("Product.CategoryIdRequired", "Category ID is required."));
+        }
+
         Name = name;
         Price = price;
+        CategoryId = categoryId;
         
         Update(); // Trigger BaseEntity UpdatedAt update
         

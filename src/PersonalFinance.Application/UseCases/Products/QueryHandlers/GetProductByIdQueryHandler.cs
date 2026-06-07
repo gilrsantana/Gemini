@@ -22,7 +22,7 @@ public class GetProductByIdQueryHandler : IQueryHandler<GetProductByIdQuery, Pro
             return Result.Failure<ProductResponse>(new Error("Product.NotFound", "Product not found."));
         }
 
-        var response = new ProductResponse(product.Id, product.Name, product.Price, product.CreatedAt);
+        var response = new ProductResponse(product.Id, product.Name, product.Price, product.CategoryId, product.CreatedAt);
         return response;
     }
 }

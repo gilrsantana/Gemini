@@ -1,4 +1,4 @@
-  Por favor, invoque o subagente  dotnet-boilerplate-architect  para implementar uma nova entidade completa no projeto chamada  Customer .
+  Por favor, invoque o subagente  dotnet-boilerplate-architect  para implementar uma nova entidade completa no projeto chamada  Category .
   Instruções para o agente:
   1. Para começar, leia a nossa skill de roteamento em  .gemini/skills/00-scaffold-feature-playbook/SKILL.md .
   2. Siga rigorosamente a ordem sequencial das fases descritas no checklist do playbook (da Fase 1 à Fase 6).

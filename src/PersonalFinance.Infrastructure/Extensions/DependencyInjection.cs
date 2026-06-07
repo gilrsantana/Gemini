@@ -44,6 +44,7 @@ public static class DependencyInjection
 
         // Repositories & Unit of Work
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<IProductRepository>());
 
         return services;
